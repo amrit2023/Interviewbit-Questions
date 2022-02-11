@@ -1,0 +1,64 @@
+int peak(vector<int>&A){
+    int low=0;
+    int high=A.size()-1;
+    int ans;
+    while(low<=high){
+    int mid=low+(high-low)/2;
+    if(A[mid]>A[mid+1]&&A[mid]>A[mid-1]){
+        ans=mid;
+        break;
+    }
+    else if(A[mid]>A[mid-1]&&A[mid]<A[mid+1]){
+        low=mid+1;
+    }
+    else if(A[mid]>A[mid+1]&&A[mid]<A[mid-1]){
+        high=mid-1;
+    }
+    }
+    return ans;
+}
+int binary1(vector<int>&A,int x,int low,int high){
+    int ans=-1;
+    while(low<=high){
+    int mid=low+(high-low)/2;
+    if(A[mid]==x){
+    ans=mid;
+    break;
+    }
+    else if(A[mid]>x){
+    high=mid-1;
+    }
+    else{
+    low=mid+1;
+    }
+    }
+    return ans;
+}
+int binary2(vector<int>&A,int x,int low,int high){
+    int ans=-1;
+    while(low<=high){
+    int mid=low+(high-low)/2;
+    if(A[mid]==x){
+    ans=mid;
+    break;
+    }
+    else if(A[mid]>x){
+    low=mid+1;
+    }
+    else{
+    high=mid-1;
+    }
+    }
+    return ans;
+}
+int Solution::solve(vector<int> &A, int B) {
+   int n=A.size(); 
+   int p=peak(A);
+   int a=binary1(A,B,0,p);
+   int b=binary2(A,B,p,n-1);
+   
+   if(a==-1&&b==-1){
+       return -1;
+   }
+   return max(a,b);
+}
